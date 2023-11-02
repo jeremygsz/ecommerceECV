@@ -1,0 +1,50 @@
+header nav{
+    height: 80px;
+    position: fixed;
+    border-bottom: 1px solid black;
+    background-color: white;
+    z-index: 10000;
+}
+nav a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+nav span{
+    font-weight: bold;
+}
+main{
+    padding-top: 120px;
+}
+main h2{
+    font-size: 16px;
+    text-align: center  ;
+}
+main #products{
+    display: flex;
+    flex-wrap: wrap;
+}
+main #products a{
+   width: 25%;
+   text-decoration: none;
+}
+.card-title{
+    font-weight: bold;
+    font-size: 18px;
+}
+.barre{
+    text-decoration: line-through;
+}
+footer{
+    display: flex;
+    height: 100px;
+    background-color: black;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+footer a {
+    margin: 10px;
+   text-decoration: none;
+    color: white;
+}
