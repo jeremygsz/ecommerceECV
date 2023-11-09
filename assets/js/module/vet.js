@@ -75,13 +75,13 @@ export function getProduct(vetements){
     let product = {};
     vetements.filter((element)=>{
         if(element.id == urlParams.get('productId')){
-            displayVetement(element);
+            // displayVetement(element);
             return;
         }
     })
 
 }
 
-export function displayVetement(vetement){
+// export function displayVetement(vetement){
     
-}
+// }

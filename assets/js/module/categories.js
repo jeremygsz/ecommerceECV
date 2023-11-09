@@ -19,24 +19,29 @@ function displayCategorie(categorie){
 }
 
 function categorieEvent(e){
-    let categoryClicked = event.target.dataset.categorie;
+    let categoryClicked = e.target.dataset.categorie;
     [...document.querySelectorAll('#categories button')].map((cate)=> {
-        cate.classList.remove('btn-primary')
-        cate.classList.add('btn-outline-primary')
-        return
+        cate.classList.remove('btn-primary');
+        cate.classList.add('btn-outline-primary');
+        return;
     })
     e.target.classList.add('btn-primary');
     e.target.classList.remove('btn-outline-primary');
-    document.querySelectorAll('#cars .card').forEach(car => {
-        if(car.dataset.categorie === categoryClicked){
-        car.classList.add('d-flex');
-        car.classList.remove('d-none');
+    filterProduct(categoryClicked);
+}
+
+function filterProduct(categoryClicked){
+    document.querySelectorAll('#products .card').forEach(product => {
+        if(product.dataset.categorie === categoryClicked){
+            product.classList.add('d-flex');
+            product.classList.remove('d-none');
         }else if(categoryClicked == ''){
-        car.classList.add('d-flex');
-        car.classList.remove('d-none');
+            product.classList.add('d-flex');
+            product.classList.remove('d-none');
         }else{
-        car.classList.add('d-none');
-        car.classList.remove('d-flex');
+            product.classList.add('d-none');
+            product.classList.remove('d-flex');
         }
     })
+
 }
