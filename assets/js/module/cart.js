@@ -35,9 +35,23 @@ export function displayCart(vetements){
         let productsCart = [];
         let cart = localStorage.cart;
         if(!cart){
-            document.querySelector('#cart-page').innerHTML = '<h1>Votre panier est vide</h1>';
+            document.querySelector('#cart-page').innerHTML = '<h1 class="text-center my-5">Votre panier est vide</h1>';
         }else{
-         
+            cart = JSON.parse(localStorage.cart);
+            let productToDisplay = [];
+            cart.forEach(element => {
+                vetements.filter((el)=>{ 
+                    if(element.id == el.id){
+                        el.qty = element.qty;
+                        productToDisplay.push(el)
+                    }
+                    
+                })
+            });
+            productToDisplay.forEach( (product)=>{
+                console.log(product)
+                createProductCart(product);
+            });
         }
     // si cart est rempli on continue sinon message panier vide
     // iteration sur vetements 
@@ -46,4 +60,43 @@ export function displayCart(vetements){
 
 
    } 
+}
+function createProductCart(product){
+    let article = document.createElement('article');
+    article.classList.add('d-flex', 'flex-wrap', 'col-12', 'border','border-1','my-3')
+
+    let figure =  document.createElement('figure','col-6');
+    article.classList.add('d-flex','col-6')
+    let img =  document.createElement('img');
+    img.setAttribute('src','./../assets/img/'+ product.img )
+    img.setAttribute('alt', 'Photo du produit ' + product.title );
+    img.classList.add('img-fluid');
+    figure.append(img)
+
+    let productInfo = document.createElement('div')
+    productInfo.classList.add('d-flex','col-6','flex-wrap')
+
+    let productTitle = document.createElement('h2');
+    productTitle.classList.add('col-12');
+    productTitle.innerText = product.title;
+    
+    let productSubTitle = document.createElement('h3');
+    productSubTitle.classList.add('col-12');
+    productSubTitle.innerText = product.subtitle;
+
+    let productQty = document.createElement('input');
+    productQty.classList.add('form-control');
+    productQty.setAttribute('type', 'number');
+    productQty.setAttribute('value', product.qty);
+    productQty.setAttribute('min', '1');
+    productQty.setAttribute('max', '100');
+
+    productInfo.append(productTitle)
+    productInfo.append(productSubTitle)
+    productInfo.append(productQty)
+    article.append(figure)
+    article.append(productInfo)
+
+    document.querySelector('#cart-page').append(article)
+
 }
