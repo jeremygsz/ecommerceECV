@@ -43,6 +43,7 @@ export function displayCart(vetements){
                 vetements.filter((el)=>{ 
                     if(element.id == el.id){
                         el.qty = element.qty;
+                        el.size = element.size;
                         productToDisplay.push(el)
                     }
                     
@@ -90,6 +91,8 @@ function createProductCart(product){
     productQty.setAttribute('value', product.qty);
     productQty.setAttribute('min', '1');
     productQty.setAttribute('max', '100');
+    productQty.setAttribute('data-product-id',product.id )
+    productQty.setAttribute('data-product-size',product.size )
 
     productInfo.append(productTitle)
     productInfo.append(productSubTitle)
