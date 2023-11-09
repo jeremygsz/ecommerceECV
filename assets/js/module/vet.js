@@ -5,7 +5,7 @@ export function displayVetements(vetements){
         blocVetement.classList.add('card');
         blocVetement.setAttribute('data-categorie', element.category)
         blocVetement.setAttribute('href', 'pages/product.html?productId='+element.id)
-    
+
         let imgVetement = document.createElement('img');
         imgVetement.setAttribute('src','./assets/img/'+ element.img )
         imgVetement.setAttribute('alt', 'Photo du produit ' + element.title )

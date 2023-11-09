@@ -26,13 +26,13 @@ export function addToCart(){
             cart.push(productToAdd)
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+       alert('Ajouté au panier')
     })
 }
 
 export function displayCart(vetements){
    if(document.getElementById('cart-page')){
     
-        let productsCart = [];
         let cart = localStorage.cart;
         if(!cart){
             document.querySelector('#cart-page').innerHTML = '<h1 class="text-center my-5">Votre panier est vide</h1>';
@@ -46,20 +46,13 @@ export function displayCart(vetements){
                         el.size = element.size;
                         productToDisplay.push(el)
                     }
-                    
                 })
             });
             productToDisplay.forEach( (product)=>{
-                console.log(product)
                 createProductCart(product);
             });
+            total();
         }
-    // si cart est rempli on continue sinon message panier vide
-    // iteration sur vetements 
-    // affichage des éléments du apnier en recupérant les info du vetement
-    //ajout d'un input pour modficier la quantité
-
-
    } 
 }
 function createProductCart(product){
@@ -84,6 +77,14 @@ function createProductCart(product){
     let productSubTitle = document.createElement('h3');
     productSubTitle.classList.add('col-12');
     productSubTitle.innerText = product.subtitle;
+ 
+    let productSize = document.createElement('h4');
+    productSize.classList.add('col-12');
+    productSize.innerText = 'Taile: '+product.size;
+
+    let productPrice = document.createElement('h4');
+    productPrice.classList.add('col-12');
+    productPrice.innerText = 'Prix :'+ (product.price-product.discount);
 
     let productQty = document.createElement('input');
     productQty.classList.add('form-control');
@@ -92,14 +93,56 @@ function createProductCart(product){
     productQty.setAttribute('min', '1');
     productQty.setAttribute('max', '100');
     productQty.setAttribute('data-product-id',product.id )
+    productQty.setAttribute('data-product-price',(product.price-product.discount) )
     productQty.setAttribute('data-product-size',product.size )
-
+    
     productInfo.append(productTitle)
     productInfo.append(productSubTitle)
+    productInfo.append(productSize)
+    productInfo.append(productPrice)
     productInfo.append(productQty)
     article.append(figure)
     article.append(productInfo)
 
     document.querySelector('#cart-page').append(article)
 
+}
+
+function total(){
+    let total = 0;
+    let qty = 0;
+    document.querySelectorAll('article input').forEach(element=>{
+        total += parseFloat(element.dataset.productPrice * element.value);
+        qty += parseInt(element.value);
+    })
+    document.querySelector('#total').innerHTML = total + '€';
+    document.querySelector('#qtyTotal').innerHTML = qty;
+}
+export function changeCart(){
+    document.querySelectorAll('article input').forEach(input=>{
+        input.addEventListener('change', (event) =>{
+            total();
+            changeCartValue(event);
+        })
+    })
+   
+}
+
+
+function changeCartValue(event){
+        let productToAdd = {
+            'id':event.target.dataset.productId,
+            'size':event.target.dataset.productSize,
+            'qty':event.target.value,
+        }
+        console.log(productToAdd)
+
+        let cart = [];
+        cart = JSON.parse(localStorage.cart);
+        cart.map((element)=>{
+            if(element.id === productToAdd.id && element.size === productToAdd.size){
+                element.qty = parseInt(productToAdd.qty);
+            }
+        })
+        localStorage.setItem('cart', JSON.stringify(cart));
 }
