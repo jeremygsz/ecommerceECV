@@ -15,7 +15,7 @@ function displayCategorie(categorie){
     categoryButton.setAttribute('data-categorie', categorie)
     categoryButton.classList.add('btn','btn-outline-primary', 'm-1');
     categoryButton.onclick = categorieEvent;
-    document.querySelector('#categories > div').append(categoryButton);
+    document.querySelector('#categories > div')?.append(categoryButton);
 }
 
 function categorieEvent(e){

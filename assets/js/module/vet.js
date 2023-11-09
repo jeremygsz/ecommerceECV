@@ -57,7 +57,7 @@ export function displayVetements(vetements){
         blocVetement.append(imgVetement)
         blocVetement.append(vetementInfo)
     
-        document.getElementById('products').append(blocVetement);
+        document.getElementById('products')?.append(blocVetement);
     });
     
 }
@@ -67,4 +67,21 @@ function createSizeSpan(size){
     span.classList.add('btn', 'btn-dark', 'm-1');
     span.dataset.size = size
     return span;
+}
+
+export function getProduct(vetements){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let product = {};
+    vetements.filter((element)=>{
+        if(element.id == urlParams.get('productId')){
+            displayVetement(element);
+            return;
+        }
+    })
+
+}
+
+export function displayVetement(vetement){
+    
 }
