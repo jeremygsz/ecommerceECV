@@ -75,7 +75,6 @@ function createSizeSpan(size){
 export function getProduct(vetements){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    let product = {};
     vetements.filter((element)=>{
         if(element.id == urlParams.get('productId')){
             displayVetement(element);
@@ -88,6 +87,8 @@ export function getProduct(vetements){
 export function displayVetement(vetement){
        const productSection = document.getElementById('product');
        if(productSection){
+        productSection.dataset.productId = vetement.id;
+        
         let img = productSection.querySelector('img');
         img.setAttribute('src','./../assets/img/'+ vetement.img )
         img.setAttribute('alt', 'Photo du produit ' + vetement.title );
@@ -113,14 +114,16 @@ export function displayVetement(vetement){
        
 }
 function selectSize(e){
-    console.log(e);
+    let selectedSize = e.target.dataset.size;
     [...document.querySelectorAll('#sizes span')].map((size)=> {
         size.classList.remove('btn-dark');
         size.classList.add('btn-outline-dark');
-         if(size.dataset.size == e.target.dataset.size){
+         if(size.dataset.size == selectedSize){
             size.classList.add('btn-dark');
             size.classList.remove('btn-outline-dark');
-            document.querySelector('.product-info button').removeAttribute('disabled')
+            let buttonAddToCart = document.querySelector('.product-info button')
+            buttonAddToCart.removeAttribute('disabled');
+            buttonAddToCart.dataset.size = selectedSize;
         }
         return;
     })

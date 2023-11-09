@@ -1,3 +1,4 @@
+
 header nav{
     height: 80px;
     position: fixed;
@@ -15,6 +16,7 @@ nav span{
 }
 main{
     padding-top: 120px;
+    min-height: 90vh;
 }
 main h2{
     font-size: 16px;
