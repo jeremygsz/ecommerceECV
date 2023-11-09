@@ -1,12 +1,14 @@
 export function getCategories(vetements){
-    let categories =[]; 
-    vetements.forEach(vetement => {
-        if(!categories.includes(vetement.category)){
-            categories.push(vetement.category);
-        }
-      })
+    if(document.getElementById('home-page')){
+        let categories =[]; 
+        vetements.forEach(vetement => {
+            if(!categories.includes(vetement.category)){
+                categories.push(vetement.category);
+            }
+        })
       console.log(categories)
       categories.sort().map((cate) => displayCategorie(cate));
+    }
 }
 
 function displayCategorie(categorie){

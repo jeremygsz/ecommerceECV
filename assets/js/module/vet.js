@@ -1,5 +1,6 @@
 export function displayVetements(vetements){
-    vetements.forEach(element => {
+    if(document.getElementById('home-page')){
+       vetements.forEach(element => {
         let blocVetement = document.createElement('a');
         blocVetement.classList.add('card');
         blocVetement.setAttribute('data-categorie', element.category)
@@ -59,7 +60,9 @@ export function displayVetements(vetements){
     
         document.getElementById('products')?.append(blocVetement);
     });
-    
+      
+    }
+   
 }
 function createSizeSpan(size){
     let span = document.createElement('span')
@@ -75,13 +78,50 @@ export function getProduct(vetements){
     let product = {};
     vetements.filter((element)=>{
         if(element.id == urlParams.get('productId')){
-            // displayVetement(element);
+            displayVetement(element);
             return;
         }
     })
 
 }
 
-// export function displayVetement(vetement){
-    
-// }
+export function displayVetement(vetement){
+       const productSection = document.getElementById('product');
+       if(productSection){
+        let img = productSection.querySelector('img');
+        img.setAttribute('src','./../assets/img/'+ vetement.img )
+        img.setAttribute('alt', 'Photo du produit ' + vetement.title );
+        
+        productSection.querySelector('h1').innerText = vetement.title;
+        productSection.querySelector('h2').innerText = vetement.subtitle;
+        productSection.querySelector('#categorie').innerText = vetement.category;
+        productSection.querySelector('#color').innerText = vetement.color;
+        let sizesBlocVet = document.getElementById('sizes');
+        [...vetement.size].map((size)=>{
+            let span = document.createElement('span')
+            span.innerText = size;
+            span.classList.add('btn', 'btn-outline-dark', 'm-1');
+            span.dataset.size  = size
+            span.addEventListener('click', (e)=>{
+                selectSize(e);
+            })
+            sizesBlocVet.append(span);
+            return;
+        }) 
+
+    }
+       
+}
+function selectSize(e){
+    console.log(e);
+    [...document.querySelectorAll('#sizes span')].map((size)=> {
+        size.classList.remove('btn-dark');
+        size.classList.add('btn-outline-dark');
+         if(size.dataset.size == e.target.dataset.size){
+            size.classList.add('btn-dark');
+            size.classList.remove('btn-outline-dark');
+            document.querySelector('.product-info button').removeAttribute('disabled')
+        }
+        return;
+    })
+}
